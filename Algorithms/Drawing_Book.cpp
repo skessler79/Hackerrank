@@ -6,10 +6,17 @@ using namespace std;
  * Complete the pageCount function below.
  */
 int pageCount(int n, int p) {
-    /*
-     * Write your code here.
-     */
+    int front = p / 2;
+    int back;
+    if(n % 2 == 0)
+        back = (n - p + 1) / 2;
+    else
+        back = (n - p) / 2;
 
+    if(front >= back)
+        return back;
+    else
+        return front;
 }
 
 int main()
