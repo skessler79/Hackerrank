@@ -6,36 +6,44 @@ vector<string> split_string(string);
 
 // Complete the climbingLeaderboard function below.
 vector<int> climbingLeaderboard(vector<int> scores, vector<int> alice) {
-    set <int, greater <int> > points;
+    set <int, greater<int>> points;
     vector<int> placings;
     for(int i = 0; i < scores.size(); i++)
     {
         points.insert(scores[i]);
     }
 
-    /*for(set<int>::iterator it = points.begin(); it != points.end(); it++)
+    /*for(set<int>::iterator itr = points.begin(); itr != points.end(); itr++)
     {
-        cout << *it << " ";
-    }*/
+        cout << *itr << ' ';
+    }
+    cout << endl;*/
 
-    for(int i = 0; i < alice.size(); i++)
+    int count = 1;
+    set<int>::iterator itr = points.begin();
+    for(int i = alice.size() - 1; i >= 0;)
     {
-        int count = 0;
-        for(set<int>::iterator it = points.begin(); it != points.end(); it++)
+        
+        if(alice[i] >= *(itr))
         {
-            count++;
-            set<int>::iterator last = it;
-            if((*it) <= alice[i])
-            {
-                placings.push_back(count);
-                break;
-            }
-            else if(((*it) > alice[i]) && ((++last) == points.end()))
-            {
-                placings.push_back(count + 1);
-            }
+            placings.push_back(count);
+            --i;
+        }
+        else
+        {
+            ++itr;
+            ++count;
         }
     }
+
+    itr--;
+    if(alice[alice.size() - 1] < *itr)
+    {
+        placings.push_back(count);
+    }
+
+    reverse(placings.begin(), placings.end());
+
     return placings;
 }
 
