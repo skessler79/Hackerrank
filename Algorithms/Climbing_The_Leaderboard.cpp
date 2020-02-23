@@ -6,43 +6,85 @@ vector<string> split_string(string);
 
 // Complete the climbingLeaderboard function below.
 vector<int> climbingLeaderboard(vector<int> scores, vector<int> alice) {
-    set <int, greater<int>> points;
+    /*set <int, greater <int> > points;
     vector<int> placings;
     for(int i = 0; i < scores.size(); i++)
     {
         points.insert(scores[i]);
     }
 
-    /*for(set<int>::iterator itr = points.begin(); itr != points.end(); itr++)
+    for(set<int>::iterator it = points.begin(); it != points.end(); it++)
     {
-        cout << *itr << ' ';
+        cout << *it << " ";
     }
-    cout << endl;*/
 
-    int count = 1;
-    set<int>::iterator itr = points.begin();
-    for(int i = alice.size() - 1; i >= 0;)
+    for(int i = 0; i < alice.size(); i++)
     {
-        
-        if(alice[i] >= *(itr))
+        int count = 0;
+        for(set<int>::iterator it = points.begin(); it != points.end(); it++)
         {
-            placings.push_back(count);
-            --i;
+            count++;
+            set<int>::iterator last = it;
+            if((*it) <= alice[i])
+            {
+                placings.push_back(count);
+                break;
+            }
+            else if(((*it) > alice[i]) && ((++last) == points.end()))
+            {
+                placings.push_back(count + 1);
+            }
         }
-        else
-        {
-            ++itr;
-            ++count;
-        }
-    }
+    }*/
 
-    itr--;
-    if(alice[alice.size() - 1] < *itr)
-    {
-        placings.push_back(count);
-    }
+	vector<int> placings;
+	stack<int> st;
 
-    reverse(placings.begin(), placings.end());
+	//cout << "size: " << st.empty() << endl;
+	st.push(scores[0]);
+
+	cout << st.top() << " ";
+
+	for(int i = 1; i < scores.size(); i++)
+	{
+		if(scores[i] != scores[i-1])
+		{
+			st.push(scores[i]);
+			cout << st.top() << " ";
+		}
+	}
+
+	cout << endl;
+
+	//cout << st.top() << endl;
+
+	for(int i = 0; i < alice.size(); i++)
+	{
+		cout << i << " ";
+		cout << alice[i] << " ";
+		if(!st.empty())
+		{
+			while((alice[i] >= st.top()) && !st.empty()) 
+			{
+				st.pop();
+				if(st.empty())
+				{
+					break;
+				}
+			}
+		}
+		cout << alice[i + 1] << " ";
+		placings.push_back(st.size() + 1);
+		cout << placings.back() << endl;
+	}
+
+	cout << "loop over\n";
+
+	for(int i = 0; i < placings.size(); i++)
+	{
+		cout << placings[i] << " ";
+	}
+	cout << endl;
 
     return placings;
 }
