@@ -6,17 +6,17 @@ vector<string> split_string(string);
 
 // Complete the climbingLeaderboard function below.
 vector<int> climbingLeaderboard(vector<int> scores, vector<int> alice) {
-    set <int, greater <int> > points;
+    /*set <int, greater <int> > points;
     vector<int> placings;
     for(int i = 0; i < scores.size(); i++)
     {
         points.insert(scores[i]);
     }
 
-    /*for(set<int>::iterator it = points.begin(); it != points.end(); it++)
+    for(set<int>::iterator it = points.begin(); it != points.end(); it++)
     {
         cout << *it << " ";
-    }*/
+    }
 
     for(int i = 0; i < alice.size(); i++)
     {
@@ -35,7 +35,57 @@ vector<int> climbingLeaderboard(vector<int> scores, vector<int> alice) {
                 placings.push_back(count + 1);
             }
         }
-    }
+    }*/
+
+	vector<int> placings;
+	stack<int> st;
+
+	//cout << "size: " << st.empty() << endl;
+	st.push(scores[0]);
+
+	cout << st.top() << " ";
+
+	for(int i = 1; i < scores.size(); i++)
+	{
+		if(scores[i] != scores[i-1])
+		{
+			st.push(scores[i]);
+			cout << st.top() << " ";
+		}
+	}
+
+	cout << endl;
+
+	//cout << st.top() << endl;
+
+	for(int i = 0; i < alice.size(); i++)
+	{
+		cout << i << " ";
+		cout << alice[i] << " ";
+		if(!st.empty())
+		{
+			while((alice[i] >= st.top()) && !st.empty()) 
+			{
+				st.pop();
+				if(st.empty())
+				{
+					break;
+				}
+			}
+		}
+		cout << alice[i + 1] << " ";
+		placings.push_back(st.size() + 1);
+		cout << placings.back() << endl;
+	}
+
+	cout << "loop over\n";
+
+	for(int i = 0; i < placings.size(); i++)
+	{
+		cout << placings[i] << " ";
+	}
+	cout << endl;
+
     return placings;
 }
 
