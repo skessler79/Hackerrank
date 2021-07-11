@@ -7,54 +7,54 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'workbook' function below.
+ * Complete the 'insertionSort1' function below.
  *
- * The function is expected to return an INTEGER.
  * The function accepts following parameters:
  *  1. INTEGER n
- *  2. INTEGER k
- *  3. INTEGER_ARRAY arr
+ *  2. INTEGER_ARRAY arr
  */
 
-int workbook(int n, int k, vector<int> arr) {
-    int page = 1;
-    int specials = 0;
-    for(int i = 0; i < arr.size(); ++i)
+void insertionSort1(int n, vector<int> arr) {
+    for(int i = arr.size() - 1; i > 0; --i)
     {
-        int current = 0;
-        for(int j = 1; j <= arr[i]; ++j)
+        int temp = arr[i];
+        bool changed = false;
+        for(int j = i - 1; j >= 0; --j)
         {
-            ++current;
-            if(current == k + 1)
+            if(arr[j] > temp)
             {
-                ++page;
-                current = 1;
+                changed = true;
+                arr[j + 1] = arr[j];
+                for(int num : arr)
+                    cout << num << " ";
+                cout << "\n";
             }
-
-            if(j == page)
+            else if(arr[j] < temp && changed)
             {
-                ++specials;
-                // cout << page << endl;
+                arr[j + 1] = temp;
+                for(int num : arr)
+                    cout << num << " ";
+                cout << "\n";
+                break;
             }
-                
         }
-        ++page;
+        if(temp < arr[0])
+        {
+            arr[0] = temp;
+            for(int num : arr)
+                cout << num << " ";
+            cout << "\n";
+        }
+            
     }
-    return specials;
 }
 
 int main()
 {
-    ofstream fout(getenv("OUTPUT_PATH"));
+    string n_temp;
+    getline(cin, n_temp);
 
-    string first_multiple_input_temp;
-    getline(cin, first_multiple_input_temp);
-
-    vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
-
-    int n = stoi(first_multiple_input[0]);
-
-    int k = stoi(first_multiple_input[1]);
+    int n = stoi(ltrim(rtrim(n_temp)));
 
     string arr_temp_temp;
     getline(cin, arr_temp_temp);
@@ -69,12 +69,7 @@ int main()
         arr[i] = arr_item;
     }
 
-    int result = workbook(n, k, arr);
-
-    fout << result << "\n";
-    cout << result << "\n";
-
-    fout.close();
+    insertionSort1(n, arr);
 
     return 0;
 }

@@ -10,18 +10,36 @@ using namespace std;
  */
 
 string gameOfThrones(string s) {
-    map<char, int> char_count;
-    if(s.length() % 2 == 0)
+    // for(int i = 0; i < s.length() - 1; ++i)
+    // {
+    //     for(int j = i + 1; j < s.length(); ++j)
+    //     {
+    //         if(s[i] == s[j])
+    //         {
+    //             s.erase(s.begin() + j);
+    //             s.erase(s.begin() + i);
+    //             --i;
+    //             break;
+    //         }
+    //     }
+    // }
+    sort(s.begin(), s.end());
+
+    for(int i = 0; i < s.length() - 1; ++i)
     {
-        for(int i = 0; i < s.length(); ++i)
+        if(s.length() == 0)
+            break;
+        if(s[i] == s[i + 1])
         {
-            
+            s.erase(s.begin() + i);
+            s.erase(s.begin() + i);
+            --i;
         }
     }
-    else
-    {
 
-    }
+    if(s.length() <= 1)
+        return "YES";
+    return "NO";
 }
 
 int main()
@@ -34,6 +52,7 @@ int main()
     string result = gameOfThrones(s);
 
     fout << result << "\n";
+    cout << result << "\n";
 
     fout.close();
 

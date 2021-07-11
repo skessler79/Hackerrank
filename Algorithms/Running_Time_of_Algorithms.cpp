@@ -7,54 +7,39 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'workbook' function below.
+ * Complete the 'runningTime' function below.
  *
  * The function is expected to return an INTEGER.
- * The function accepts following parameters:
- *  1. INTEGER n
- *  2. INTEGER k
- *  3. INTEGER_ARRAY arr
+ * The function accepts INTEGER_ARRAY arr as parameter.
  */
 
-int workbook(int n, int k, vector<int> arr) {
-    int page = 1;
-    int specials = 0;
-    for(int i = 0; i < arr.size(); ++i)
+int runningTime(vector<int> arr) {
+    int shifts = 0;
+    for(int i = 0; i < arr.size() - 1; ++i)
     {
-        int current = 0;
-        for(int j = 1; j <= arr[i]; ++j)
+        for(int j = i; j >= 0; --j)
         {
-            ++current;
-            if(current == k + 1)
+            if(arr[j] <= arr[j + 1])
             {
-                ++page;
-                current = 1;
+                break;
             }
-
-            if(j == page)
-            {
-                ++specials;
-                // cout << page << endl;
-            }
-                
+            int temp = arr[j];
+            arr[j] = arr[j+1];
+            arr[j+1] = temp;
+            ++shifts;
         }
-        ++page;
     }
-    return specials;
+    return shifts;
 }
 
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    string first_multiple_input_temp;
-    getline(cin, first_multiple_input_temp);
+    string n_temp;
+    getline(cin, n_temp);
 
-    vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
-
-    int n = stoi(first_multiple_input[0]);
-
-    int k = stoi(first_multiple_input[1]);
+    int n = stoi(ltrim(rtrim(n_temp)));
 
     string arr_temp_temp;
     getline(cin, arr_temp_temp);
@@ -69,7 +54,7 @@ int main()
         arr[i] = arr_item;
     }
 
-    int result = workbook(n, k, arr);
+    int result = runningTime(arr);
 
     fout << result << "\n";
     cout << result << "\n";

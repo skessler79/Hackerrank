@@ -7,54 +7,43 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'workbook' function below.
+ * Complete the 'insertionSort2' function below.
  *
- * The function is expected to return an INTEGER.
  * The function accepts following parameters:
  *  1. INTEGER n
- *  2. INTEGER k
- *  3. INTEGER_ARRAY arr
+ *  2. INTEGER_ARRAY arr
  */
 
-int workbook(int n, int k, vector<int> arr) {
-    int page = 1;
-    int specials = 0;
-    for(int i = 0; i < arr.size(); ++i)
-    {
-        int current = 0;
-        for(int j = 1; j <= arr[i]; ++j)
-        {
-            ++current;
-            if(current == k + 1)
-            {
-                ++page;
-                current = 1;
-            }
+void insertionSort2(int n, vector<int> arr) {
+    // for(int num : arr)
+    //     cout << num << " ";
+    // cout << endl;
 
-            if(j == page)
+    for(int i = 0; i < arr.size() - 1; ++i)
+    {
+        for(int j = i; j >= 0; --j)
+        {
+            if(arr[j] <= arr[j + 1])
             {
-                ++specials;
-                // cout << page << endl;
+                break;
             }
-                
+            int temp = arr[j];
+            arr[j] = arr[j+1];
+            arr[j+1] = temp;
         }
-        ++page;
+
+        for(int num : arr)
+            cout << num << " ";
+        cout << endl;
     }
-    return specials;
 }
 
 int main()
 {
-    ofstream fout(getenv("OUTPUT_PATH"));
+    string n_temp;
+    getline(cin, n_temp);
 
-    string first_multiple_input_temp;
-    getline(cin, first_multiple_input_temp);
-
-    vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
-
-    int n = stoi(first_multiple_input[0]);
-
-    int k = stoi(first_multiple_input[1]);
+    int n = stoi(ltrim(rtrim(n_temp)));
 
     string arr_temp_temp;
     getline(cin, arr_temp_temp);
@@ -69,12 +58,7 @@ int main()
         arr[i] = arr_item;
     }
 
-    int result = workbook(n, k, arr);
-
-    fout << result << "\n";
-    cout << result << "\n";
-
-    fout.close();
+    insertionSort2(n, arr);
 
     return 0;
 }
