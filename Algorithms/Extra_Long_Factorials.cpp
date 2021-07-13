@@ -12,35 +12,43 @@ string rtrim(const string &);
  */
 
 void extraLongFactorials(int n) {
-    vector<int> arr;
-    arr.push_back(1);
+    vector<int> num = {1};
+    int carry = 0;
 
-    for(int i = 2; i <= n; ++i)
+    while(n)
     {
-        for(int j = 0; j < arr.size(); ++j)
+        for(int i = 0; i < num.size(); ++i)
         {
-            arr[j] *= i;
-            if(arr[j] < 10)
-            {
-                continue;
-            }
+            num[i] *= n;
+            num[i] += carry;
+            carry = 0;
 
-            if(j == arr.size() - 1)
+            if(num[i] >= 10)
             {
-                arr.push_back(0);
-                j++;
+                if(i == num.size() - 1)
+                {
+                    num.push_back(num[i] / 10);
+                    if(num[i+1] >= 10)
+                    {
+                        num.push_back(num[i+1] / 10);
+                        num[i+1] = num[i+1] % 10;
+                    }
+
+                    num[i] = num[i] % 10;
+                    break;
+                }
+                else
+                {
+                    carry += num[i] / 10;
+                    num[i] = num[i] % 10;
+                }               
             }
-            arr[j] += arr[j-1] / 10;
-            arr[j-1] %= 10;
         }
+        --n;
     }
 
-    for(int i = arr.size() - 1; i >= 0; --i)
-    {
-        cout << arr[i];
-    }
-
-    cout << endl;
+    for(int i = num.size() - 1; i >= 0; --i)
+        cout << num[i];
 }
 
 int main()
